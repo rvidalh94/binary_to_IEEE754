@@ -1,34 +1,57 @@
 def main():
     print('** Converter App **\n')
-    print('Reading file...\n')
-    print('')
+    print('Reading file...')
+    # Counters and list
+    total_line = 0
 
-    file = open('numeros.txt', 'r')
+    binary_counter = 0
+    binary_ieee754 = []
 
-    for line in file:
+    decimal_counter = 0
+    decimal_ieee754 = []
+
+    octal_counter = 0
+    octal_ieee754 = []
+
+    hexadecimal_counter = 0
+    hexadecimal_ieee754 = []
+
+    # Reading file and calculate
+    input_file = open('numeros.txt', 'r')
+    for index, line in enumerate(input_file):
+        print(f'Procesando fila {index + 1}')
+        total_line += 1
         base, number = line.split(';')
         number = number.replace('\n', '')
         if base == '10':
-            if not '.' in number:
-                n = decimal_e_binary(number)
-                print(binary_to_IEEE754(n))
-            elif '.' in number:
-                whole, dec = number.split('.')
-                whole = decimal_e_binary(whole)
-                dec = decimal_f_binary(number)
-                n = f'{whole}.{dec}'
-                print(binary_to_IEEE754(n))
+            whole, dec = number.split('.')
+            whole = decimal_e_binary(whole)
+            dec = decimal_f_binary(number)
+            n = f'{whole}.{dec}'
+            decimal_counter += 1
+            decimal_ieee754.append(binary_to_IEEE754(n))
         elif base == '2':
-            print(binary_to_IEEE754(number))
+            binary_counter += 1
+            binary_ieee754.append(binary_to_IEEE754(number))
         elif base == '16':
             n = hexadecimal_binary(number)
-            print(binary_to_IEEE754(n))
+            hexadecimal_counter += 1
+            hexadecimal_ieee754.append(binary_to_IEEE754(n))
         elif base == '8':
             n = octal_binary(number)
-            print(binary_to_IEEE754(n))
+            octal_counter += 1
+            octal_ieee754.append(binary_to_IEEE754(n))
+    
+    print('Writing file...')
 
-    print('\nClosing file...')
-    file.close()
+    output_file = open('precision.txt', 'x')
+    total_converted = decimal_counter + binary_counter + octal_counter + hexadecimal_counter
+    output_file.write(f'Total {total_line}. Convertidos: {total_converted}')
+    output_file.close()
+
+    print('Closing file...')
+    print('Convertion finished!!!')
+    input_file.close()
 
 
 # Decimal numbers
@@ -56,7 +79,6 @@ def decimal_f_binary(decimal_number):  # To fractionary part
 # Octal numbers
 
 def octal_binary(octal_number):
-    octal_number = octal_number
     octal_binary_table = {
         '0': '000',
         '1': '001',
@@ -96,7 +118,6 @@ def hexadecimal_binary(hexadecimal_number):
         '-': '-',
     }
     return ''.join(hexadecimal_binary_table[n] for n in hexadecimal_number)
-
 
 # To IEEE 754
 

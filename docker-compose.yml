@@ -2,3 +2,5 @@ version: '3'
 services:
  myapp:
   image: python:3.9.7-alpine3.14
+  volumes:
+    - .:/code
