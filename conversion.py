@@ -44,9 +44,33 @@ def main():
     
     print('Writing file...')
 
-    output_file = open('precision.txt', 'x')
+    output_file = open('precision.txt', 'w+')
     total_converted = decimal_counter + binary_counter + octal_counter + hexadecimal_counter
-    output_file.write(f'Total {total_line}. Convertidos: {total_converted}')
+    output_file.write(f'Total {total_line}. Convertidos: {total_converted}\n')
+
+    output_file.write(f'# Binarios: {len(binary_ieee754)}\n')
+    output_file.write('*************\n')
+    wrt_list = [f'{n}\n' for n in binary_ieee754]
+    output_file.writelines(wrt_list)
+    output_file.write('*************\n\n')
+
+    output_file.write(f'# Octales: {len(octal_ieee754)}\n')
+    output_file.write('*************\n')
+    wrt_list = [f'{n}\n' for n in octal_ieee754]
+    output_file.writelines(wrt_list)
+    output_file.write('*************\n\n')
+
+    output_file.write(f'# Hexa: {len(hexadecimal_ieee754)}\n')
+    output_file.write('*************\n')
+    wrt_list = [f'{n}\n' for n in hexadecimal_ieee754]
+    output_file.writelines(wrt_list)
+    output_file.write('*************\n\n')
+
+    output_file.write(f'# Decimales: {len(decimal_ieee754)}\n')
+    output_file.write('*************\n')
+    wrt_list = [f'{n}\n' for n in decimal_ieee754]
+    output_file.writelines(wrt_list)
+    output_file.write('*************\n\n')
     output_file.close()
 
     print('Closing file...')

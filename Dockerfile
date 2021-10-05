@@ -1,7 +1,7 @@
 FROM python:3.9.7-alpine3.14
 
-WORKDIR /binary_to_IEEE754
-COPY . .
+ADD conversion.py /
 
-CMD ["conversion.py"]
-ENTRYPOINT ["python3"]
+WORKDIR /binary_to_IEEE754/binary_to_IEEE754
+
+CMD ["python3", "conversion.py"]
